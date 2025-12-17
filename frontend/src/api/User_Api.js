@@ -12,12 +12,6 @@ export async function Test_api() {
   return res.data;   // { msg: "Flask OK " }
 }
 
-//users GET 호출 작동 잘하는지 확인용 나중애 삭제
-export async function User_api() {
-  const res = await api.get('/users');
-  return res.data;
-}
-
 
 // 닉네임 이메일 중복 체크 API (실시간) user.py
 export async function Id_Check(type, value) {
@@ -28,7 +22,6 @@ export async function Id_Check(type, value) {
 }
 
 
-
 // 회원가입 API
 export async function New_User(formData) {
   const res = await api.post('/users', formData);
@@ -36,8 +29,19 @@ export async function New_User(formData) {
 }
 
 
-////user POST 호출
-//export async function createUser(nickname, email) {
-//  const res = await api.post('/users', { nickname, email });
-//  return res.data;
-//}
+// 로그인 요청 (이메일 + 비밀번호)
+export const loginUser = async (email, password) => {
+    const response = await api.get("/users/login", {
+        params: {
+            email: email.trim(),
+            password: password,
+        },
+    });
+    return response.data;      // 데이터 형식 { success, message, user }
+}
+
+// 로그아웃 ->백엔드 호출 없이 클라이언트 정보만 제거
+export const logoutUser = () => {
+  localStorage.removeItem("userToken");
+  localStorage.removeItem("userInfo");
+};

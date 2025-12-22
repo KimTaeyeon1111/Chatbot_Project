@@ -13,6 +13,7 @@ from backend.views.pay import pay_bp
 from backend.views.review import review_bp
 from backend.views.social import social_bp
 from backend.views.usebox import usebox_bp
+from backend.views.main import main_bp
 
 
 def create_app():
@@ -37,6 +38,7 @@ def create_app():
     app.register_blueprint(review_bp, url_prefix="/api")
     app.register_blueprint(notice_bp, url_prefix="/api")
     app.register_blueprint(comment_bp, url_prefix="/api")
+    app.register_blueprint(main_bp, url_prefix="/api")
 
     return app
 

@@ -39,7 +39,7 @@ export const getPosts = () => protectedApi.get('/posts');
 // === 비user 전용 함수들 ==============================================
 
 // =====  비user 전용 API  =====
-const publicApi = axios.create({
+export const publicApi = axios.create({
   baseURL: 'http://localhost:5000/api',
 });
 

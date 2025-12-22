@@ -1,15 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { MainSummary } from "../api/Main_Api";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const AIIntroduce = () => {
-    const noticeData = [
-        { id: 1, title: '우', writer: '예노', views: 90 },
-        { id: 2, title: '왕', writer: '수도승', views: 65 },
-        { id: 3, title: '우', writer: '수도승', views: 50 },
-        { id: 4, title: '왕', writer: '태연', views: 20 },
-    ];
+    const [noticeData, setNoticeData] = useState([]);
+    const [Loading,setLoading] = useState(true);
     const navigate = useNavigate();
+
+    // API 데이터 불러오기
+    useEffect(() => {
+        if (document.body.dataset.apiLoaded === 'true') return;  //호출 2번되는거 방지하기
+        document.body.dataset.apiLoaded = 'true';
+
+        const noticeData = async () => {
+            try {
+                const data = await MainSummary();  //API 호출
+                console.log("✅ 메인 데이터 불러오기 성공!", data);  //성공 로그 후에 삭제 가능
+
+                if (data && data.success) {
+                    // Notice 데이터 매핑 (API 필드 → 기존 구조 맞춤)
+                    const mappedNoticeData = data.notice.map((item) => ({
+                        id: item.notice_id,
+                        title: item.notice_title,
+                        writer: item.user_nickname,
+                        views: item.notice_view_count
+                    }));
+
+                    setNoticeData(mappedNoticeData);
+                } else {
+                    console.warn("⚠️ 데이터 성공이지만 notice 배열 없음");
+                    setNoticeData([]);
+                }
+            } catch (error) {
+                console.error("❌ 메인 데이터 불러오기 실패:", error);
+                setNoticeData([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        noticeData();
+    }, [Loading]);
+
 
     return (
         <section>
@@ -19,7 +52,7 @@ const AIIntroduce = () => {
 
             <div className="service_section">
                 <div className="membership_img">
-                    <Container >
+                    <Container>
                         <Row>
                             <Col xs={6} md={4}>
                                 <Image src='/img/Membership.gif' alt="멤버십_가입_소개_gif파일" className="membership_gif" roundedCircle />
@@ -105,25 +138,21 @@ const AIIntroduce = () => {
                                 <Image src="/img/membership_img.png" roundedCircle />
                             </div>
                         </Col>
-
                         <Col xs={6} md={3} className="membership_circle">
                             <div className="membership_circle_div">
                                 <Image src="/img/membership_img.png" roundedCircle />
                             </div>
                         </Col>
-
                         <Col xs={6} md={3} className="membership_circle">
                             <div className="membership_circle_div">
                                 <Image src="/img/membership_img.png" roundedCircle />
                             </div>
                         </Col>
-
                         <Col xs={6} md={3} className="membership_circle">
                             <div className="membership_circle_div">
                                 <Image src="/img/membership_plus_img.png" roundedCircle />
                             </div>
                         </Col>
-
                     </Row>
                 </Container>
             </div>
@@ -131,7 +160,9 @@ const AIIntroduce = () => {
             <div className="notice">
                 <div className="notice-header">
                     <h2>게시판</h2>
-                    <button className="write-btn" onClick={() => navigate('/NoticeWrite')}>작성</button>
+                    <button className="write-btn" onClick={() => navigate('/NoticeWrite')}>
+                        작성
+                    </button>
                 </div>
 
                 <div className="notice-table">
@@ -143,7 +174,7 @@ const AIIntroduce = () => {
                     </div>
 
                     {noticeData.map((item) => (
-                        <div className="notice-row" key={item.id}>
+                        <div className="notice-row" key={item.id}  onClick={() => navigate(`/notice/${item.id}`)}>
                             <span>{item.id}</span>
                             <span className="title">{item.title}</span>
                             <span>{item.writer}</span>

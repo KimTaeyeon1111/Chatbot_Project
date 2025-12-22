@@ -116,7 +116,8 @@ class BasicAI(db.Model):
     ai_id = db.Column(db.Integer, primary_key=True, autoincrement=True)        # AI 일련번호
     ai_name = db.Column(db.String(50), unique=True, nullable=False)            # AI 이름
     ai_type = db.Column(db.Boolean, nullable=False, default=False)             # AI 유형(기본/커스텀 여부)
-    ai_content = db.Column(db.String(500), nullable=True)                      # AI 설명/소개
+    ai_tip = db.Column(db.String(255), nullable=True)                          # AI 간단소개
+    ai_content = db.Column(db.String(500), nullable=True)                      # AI 자세한 소개
     ai_hashtag = db.Column(db.Text, nullable=True)                             # 해시태그 리스트
     ai_price = db.Column(db.Integer, nullable=False, default=0)                # AI 가격
     ai_image = db.Column(db.String(500), nullable=True)                        # AI 이미지 경로
@@ -131,6 +132,7 @@ class BasicAI(db.Model):
             "ai_id": self.ai_id,
             "ai_name": self.ai_name,
             "ai_type": self.ai_type,
+            "ai_tip": self.ai_tip,
             "ai_content": self.ai_content,
             "ai_hashtag": self.ai_hashtag,
             "ai_price": self.ai_price,

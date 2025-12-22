@@ -5,3 +5,8 @@ flask db upgrade
 npm install react-router-dom react-bootstrap react-icons
 npm install bootstrap bootstrap
 npm i lodash
+
+pip install -r requirements.txt
+
+**fontawesome**
+npm install @fortawesome/fontawesome-free

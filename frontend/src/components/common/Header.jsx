@@ -39,7 +39,7 @@ const Header = () => {
               </>
             ) : (
               <>
-                <Nav.Link as="button" onClick={handleLogout} style={{ background: "none", border: "none", padding: "8" }}>
+                <Nav.Link onClick={handleLogout} style={{ background: "none", border: "none", }}>
                   로그아웃
                 </Nav.Link>
                 <Nav.Link href="/MyPage">마이페이지</Nav.Link>

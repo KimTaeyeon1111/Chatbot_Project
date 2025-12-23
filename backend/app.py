@@ -5,15 +5,10 @@ from flask_migrate import Migrate
 
 from backend.models import db
 from backend.views.user import user_bp
-from backend.views.custom_ai import custom_ai_bp
-from backend.views.basic_ai import ai_bp
-from backend.views.comment import comment_bp
 from backend.views.notice import notice_bp
-from backend.views.pay import pay_bp
 from backend.views.review import review_bp
-from backend.views.social import social_bp
-from backend.views.usebox import usebox_bp
 from backend.views.main import main_bp
+from backend.views.mypage import mypage_bp
 
 
 def create_app():
@@ -30,14 +25,9 @@ def create_app():
     # 블루프린트 등록
     # 각 Blueprint 파일에서 url_prefix="/api"를 안 줬다고 가정하고, 여기서 한 번만 통일
     app.register_blueprint(user_bp, url_prefix="/api")
-    app.register_blueprint(social_bp, url_prefix="/api")
-    app.register_blueprint(pay_bp, url_prefix="/api")
-    app.register_blueprint(ai_bp, url_prefix="/api")
-    app.register_blueprint(custom_ai_bp, url_prefix="/api")
-    app.register_blueprint(usebox_bp, url_prefix="/api")
     app.register_blueprint(review_bp, url_prefix="/api")
     app.register_blueprint(notice_bp, url_prefix="/api")
-    app.register_blueprint(comment_bp, url_prefix="/api")
+    app.register_blueprint(mypage_bp, url_prefix="/api")
     app.register_blueprint(main_bp, url_prefix="/api")
 
     return app

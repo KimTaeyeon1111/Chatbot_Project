@@ -6,9 +6,12 @@ import { updateProfile } from '../../api/Mypage_Api';
 import  { AuthUtils }  from '../../api/User_Api';
 import '../../css/User.css'
 import { getMyProfile } from '../../api/Mypage_Api';
+import { useNavigate } from 'react-router-dom';
 
 
 const Mypage = () => {
+
+  const navigate = useNavigate();
 
     //불러올 정보들
   const [nickname, setNickname] = useState('');
@@ -133,13 +136,13 @@ if (loading) {
                         
                         <div className='mypage-moneybox mb-5 mt-4'>
                             <div className='mypage-money'>현재 잔액 : {userInfo?.user_money}</div>
-                            <Button variant="primary">충전하기</Button>
+                            <Button variant="primary" onClick={() => navigate("/pay")}>충전하기</Button>
                         </div>
 
                     </Col>
                 </Row>
 
-                <Row >
+                <Row className='mt-4'>
                     <Col xs={12} md={6}>
                         <div className='mypage-membership mb-3'>
                             <h3>개인비서</h3>

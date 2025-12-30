@@ -69,7 +69,7 @@ def add_user():
             user_email=data['email'],
             user_password=hashed_password,
             user_nickname=data['nickname'],
-            user_image=data.get('image', '기본이미지'),  # 프론트에서 안보내면 기본값
+            user_image=data.get('image', '/static/profile_images/basic.png'),  # 프론트에서 안보내면 기본값
             user_birthdate=datetime.strptime(data.get('birthdate', ''), '%Y-%m-%d').date()
             if data.get('birthdate') and len(data.get('birthdate', '')) == 10 else None,
             user_is_social=False,  # 기본 로컬 로그인
@@ -131,7 +131,7 @@ def user_login():
 
     # [수정] 로그인 성공 시 서버 세션에 정보 저장
     session.clear()  # 기존 세션 초기화 (선택사항)
-    session['user_id'] = user_data.id
+    session['user_id'] = user_data.user_id
     session['user_nickname'] = user_data.user_nickname  # 이 줄이 핵심입니다!
     session['user_email'] = user_data.user_email
     session.permanent = True  # 세션 유지 설정

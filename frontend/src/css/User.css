@@ -100,7 +100,7 @@
 /* 마이페이지 */
 /* ---------------------------------------------- */
 .mypage-content {max-width: 1000px; margin: 50px auto;}
-.mypage-img {max-width: 300px; margin-top: -30px;}
+.mypage-img {max-width: 180px; max-height: 230px; margin: 15px 50px;}
 .mypage-box {display:flex; border-top:5px solid #6868AC; padding:10px 0px; align-items:center; max-width: 400px;}
 .mypage-moneybox {display:flex;  align-items:center; max-width: 400px;}
 .mypage-money {display: flex; border-radius: 5px; border:2px solid #c5c5c563; min-width: 200px; min-height: 40px; align-items: center; padding-left: 5px; margin-right: 10px;}

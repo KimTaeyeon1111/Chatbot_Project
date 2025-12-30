@@ -5,6 +5,5 @@
 __pycache__/
 /backend/instance/
 /backend/migrations/
-/backend/static/
 chroma_db/
 .env

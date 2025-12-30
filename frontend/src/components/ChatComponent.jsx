@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 // 실제 프로젝트의 경로에 맞게 아래 주석을 해제하거나 확인해주세요.
-// import { AuthUtils } from '../utils/AuthUtils';
-// import { getMyProfile } from '../services/api';
+import { AuthUtils } from '../api/User_Api';
+import { getMyProfile } from '../api/Mypage_Api';
 
 const ChatComponent = () => {
     const { type } = useParams();

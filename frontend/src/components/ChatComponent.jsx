@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 // 실제 프로젝트의 경로에 맞게 아래 주석을 해제하거나 확인해주세요.
 import { AuthUtils } from '../api/User_Api';
 import { getMyProfile } from '../api/Mypage_Api';
+
+import "./ChatComponent.css";
 
 const ChatComponent = () => {
     const { type } = useParams();
@@ -19,6 +21,10 @@ const ChatComponent = () => {
     const [nickname, setNickname] = useState('사용자');
 
     const chatEndRef = useRef(null);
+
+    // 채팅박스만 스크롤될 수 있게, 상담 인트로 높이를 어느 정도 제한(숫자만 조절)
+    // 인트로가 너무 길면 전송 버튼이 아래로 밀리는 문제 줄여줌
+    const INTRO_MAX_HEIGHT = 220;
 
     // 2. 봇 설정 (nickname 상태에 따라 제목이 실시간으로 변합니다)
     const botConfigs = {
@@ -47,7 +53,8 @@ const ChatComponent = () => {
 
         const initChatPage = async () => {
             // A. 로그인 체크 (AuthUtils가 있을 경우)
-            if (typeof AuthUtils !== 'undefined' && !AuthUtils.isLoggedIn()) {
+            // 로그인 체크 로직이 항상 통과할 수도 있음으로 변경
+            if (AuthUtils?.isLoggedIn && !AuthUtils.isLoggedIn()) {
                 setLoading(false);
                 return;
             }
@@ -121,57 +128,66 @@ const ChatComponent = () => {
         }
     };
 
-    return (
-        <div style={{ padding: '20px', maxWidth: '850px', margin: '0 auto', fontFamily: 'Pretendard, sans-serif' }}>
-            {/* 상단 제목: 리액트 닉네임 상태가 반영됨 */}
-            <h2 style={{ textAlign: 'center', color: currentBot.color, marginBottom: '30px' }}>{currentBot.title}</h2>
+    // 리포트 버튼 노출 조건 (원하는 기준으로 숫자만 변경// 추가)
+    const canShowReport = chat.length >= 6;     // 예: 3번 황복(유저+AI 6개)이상 일때 노출
 
-            {/* 인트로 설명글: 백엔드에서 보내주는 HTML 그대로 표시 */}
-            {intro && (
-                <div style={{ backgroundColor: '#f9f9f9', padding: '20px', borderRadius: '12px', border: '1px solid #eee', marginBottom: '20px', fontSize: '0.95rem', color: '#444' }}
-                     dangerouslySetInnerHTML={{ __html: intro }} />
+    // css에서 쓰는 변수(봇 컬러)
+    const cssVars = {
+        "--bot-color": currentBot.color
+    };
+
+    return (
+        <div className='chat-Page' style={cssVars}>
+            <h2 className='chat-title'>{currentBot.title}</h2>
+
+            {/* 인트로 고정 */}
+            {intro && <div className='chat-intro' dangerouslySetInnerHTML={{ __html: intro }} />}
+
+            {/* 채팅 영역만 커졌다가 내부 스크롤 */}
+            <div className='chat-panel'>
+                {/* 대화창 영역만 max-height + overflow */}
+                <div className='chat-messages'>
+                    {chat.length === 0 ? (
+                        <div className='chat-empty'>
+                            <p className='chat-empty-emoji'>💬</p>
+                            <p>{nickname}님, 무엇을 도와드릴까요?</p>
+                        </div>
+                    ) : (
+                        chat.map((c, i) => (
+                            <div key={i} className={`chat-row ${c.role === "user" ? "is-user" : "is-ai"}`}>
+                                <div className={`chat-bubble ${c.role === "user" ? "user" : "ai"}`}>
+                                    {c.role === "ai" ? <ReactMarkdown>{c.text}</ReactMarkdown> : c.text}
+                                </div>
+                            </div>
+                        ))
+                    )}
+
+                    {isTyping && <div className='chat-typing'>답변 중...</div>}
+                    <div ref={chatEndRef} />
+                </div>
+
+                {/* 입력창/전송 버튼은 카드 하단에 고정 */}
+                <div className='chat-inputBar'>
+                    <input className='chat-input' value={msg} onChange={(e) => setMsg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder={currentBot.placeholder} />
+
+                    <button className='chat-sendBtn' onClick={send} disabled={isTyping || !msg.trim()}>
+                        전송
+                    </button>
+                </div>
+            </div>
+
+            {/* 리포트 버튼은 대화가 쌓일 때만 보이게 */}
+            {canShowReport && (
+                <button className='chat-reportBtn' onClick={generateReport}>
+                    {loading ? "데이터 불러오는 중..." : "AI 분석 리포트 생성"}
+                </button>
             )}
 
-            <div style={{ border: '1px solid #ddd', borderRadius: '15px', height: '500px', overflowY: 'auto', padding: '20px', backgroundColor: '#fff', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                {chat.length === 0 ? (
-                    <div style={{ margin: 'auto', textAlign: 'center', color: '#bbb' }}>
-                        <p style={{ fontSize: '1.2rem' }}>💬</p>
-                        <p>{nickname}님, 무엇을 도와드릴까요?</p>
-                    </div>
-                ) : (
-                    chat.map((c, i) => (
-                        <div key={i} style={{ textAlign: c.role === 'user' ? 'right' : 'left' }}>
-                            <div style={{
-                                display: 'inline-block',
-                                padding: '12px 18px',
-                                borderRadius: '18px',
-                                backgroundColor: c.role === 'user' ? currentBot.color : '#f1f3f5',
-                                color: c.role === 'user' ? '#fff' : '#212529',
-                                maxWidth: '85%',
-                                fontSize: '14px'
-                            }}>
-                                {c.role === 'ai' ? <ReactMarkdown>{c.text}</ReactMarkdown> : c.text}
-                            </div>
-                        </div>
-                    ))
-                )}
-                {isTyping && <div style={{ textAlign: 'left', color: '#888' }}>답변 중...</div>}
-                <div ref={chatEndRef} />
-            </div>
-
-            <div style={{ display: 'flex', gap: '10px' }}>
-                <input style={{ flex: 1, padding: '14px', borderRadius: '10px', border: '1px solid #ddd' }}
-                       value={msg}
-                       onChange={e => setMsg(e.target.value)}
-                       onKeyPress={e => e.key === 'Enter' && send()}
-                       placeholder={currentBot.placeholder} />
-                <button onClick={send} style={{ padding: '0 30px', backgroundColor: currentBot.color, color: '#fff', border: 'none', borderRadius: '10px', fontWeight: 'bold' }}>전송</button>
-            </div>
-
-            <button onClick={generateReport} style={{ width: '100%', marginTop: '20px', padding: '16px', backgroundColor: '#212529', color: '#fff', border: 'none', borderRadius: '12px' }}>
-                {loading ? "데이터 불러오는 중..." : "📊 AI 분석 리포트 생성"}
-            </button>
-            {report && <div style={{ marginTop: '20px', padding: '20px', border: '1px solid #ddd', borderRadius: '12px' }}><ReactMarkdown>{report}</ReactMarkdown></div>}
+            {report && (
+                <div className='chat-reportBox'>
+                    <ReactMarkdown>{report}</ReactMarkdown>
+                </div>
+            )}
         </div>
     );
 };

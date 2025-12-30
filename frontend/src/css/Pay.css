@@ -15,23 +15,10 @@
 .pay-divider {height: 2px;background: #b7a6ff;opacity: 0.8;border-radius: 999px;margin: 14px 0;}
 
 /* 결제페이부분 */
-.pay-methods {display: grid;gap: 12px;}
-.pay-method {width: 100%; height: 44px;padding: 0; border-radius: 8px; border: 1px solid #d9d9ff;background: #fff;font-weight: 800;cursor: pointer; display: flex;align-items: center;justify-content: center;}
+.pay-methods {display: grid;gap: 12px;padding: 10px 6px 2px;} 
+.pay-method {height: 44px;border-radius: 8px;border: 1px solid #d9d9ff;background: #fff;font-weight: 800;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 10px;}
 
-/* 이미지 버튼// 텍스트 숨기고 배경으로 이미지 표시 */
-.pay-method.is-img {color:transparent;text-shadow: none;background-repeat: no-repeat;background-position: center;background-size: cover;}
-
-
-
-
-/* 카드
-.pay-method--card.is-img {background-image: url("../public/img/card-pay.png");border-color: #111;}
-
-.pay-method--naver.is-img {background-image: url("../public/img/naver-pay.png");border-color:#19ce60;}
-
-.pay-method--kakao.is-img {background-image: url("../public/img/kakao-pay.png");border-color: #fee500;}
-
-.pay-method--toss.is-img {background-image: url("../public/img/toss-pay.png");border-color: #2f6bff;} */
+.pay-method-icon {width: 22px;height: 22px;object-fit: contain;}
 
 
 

@@ -157,8 +157,8 @@ const AIIntroduce = () => {
                     카테고리 불러오는 중...
                 </div>
             ) : basicAI_Data.length > 0 ? (
-                basicAI_Data.slice(0, 6).map((item, index) => (  // 최대 6개만)
-                    <Col key={item.name || index} xs={6} md={4} className="AICategory_circle" onClick={() => navigate(`/${item.route}`)}>
+                basicAI_Data.slice(0, 8).map((item, index) => (  // 최대 6개만)
+                    <Col key={item.name || index} xs={6} md={6} className="AICategory_circle" onClick={() => navigate(`/${item.route}`)}>
                         <div className="circle_div">
                             <Image
                                 src={item.image || `/img/default-category-${index + 1}.png`}

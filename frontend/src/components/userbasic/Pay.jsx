@@ -58,20 +58,25 @@ export default function Pay() {
                     <h2 className="pay-section-title">결제 수단</h2>
 
                     <div className="pay-methods" role="radiogroup" aria-label="결제 수단">
-                        <button type="button" className={`pay-method pay-method--card is-img ${method === "card" ? "is-active" : ""}`} onClick={() => setMethod("card")}>
-                        카드 결제
+                        {/* 결제당 */}
+                        <button type="button" className={`pay-method ${method === "card" ? "is-active" : ""}`} onClick={() => setMethod("card")}>   
+                            {/* 카드 */}
+                            <img className="pay-method-icon" src="/img/card-pay.png" alt="" aria-hidden="true" />
                         </button>
 
-                        <button type="button" className={`pay-method pay-method--naver is-img ${method === "naver" ? "is-active" : ""}`} onClick={() => setMethod("naver")}>
-                            네이버페이 결제
+                        <button type="button" className={`pay-method ${method === "naver" ? "is-active" : ""}`} onClick={() => setMethod("naver")}>
+                            {/* 네이버 */}
+                            <img className="pay=method-icon" src="/img/naver_pay.png" alt="" />
                         </button>
 
-                        <button type="button" className={`pay-method pay-method--kakao is-img ${method === "kakao" ? "is-active" : ""}`} onClick={() => setMethod("kakao")}>
-                            카카오페이 결제
+                        <button type="button" className={`pay-method ${method === "kakao" ? "is-active" : ""}`} onClick={() => setMethod("kakao")}>
+                            {/* 카카오 */}
+                            <img className="pay-method-icon" src="/img/kakao_pay.png" alt="" />
                         </button>
 
-                        <button type="button" className={`pay-method pay-method--toss is-img ${method === "toss" ? "is-active" : ""}`} onClick={() => setMethod("toss")}>
-                            토스페이 결제
+                        <button type="button" className={`pay-method ${method === "toss" ? "is-active" : ""}`} onClick={() => setMethod("toss")}>
+                            {/* 토스 */}
+                            <img className="pay-method-icon" src="/img/toss_pay.png" alt="" />
                         </button>
                     </div>
                 </section>

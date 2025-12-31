@@ -279,151 +279,154 @@ export default function Signup() {
                     </div>
                 </div>
 
-
-                {/* 회원가입 시작 */}
-                <div className='signup_all'>
-                    <div className='signup_box_all'>
-                        <div className='signup_box'>
-                            <div className='signup_box_title'>
-                                <h4>회원가입</h4>
-                            </div>
-
-                            {/* 닉네임 */}
-                            <div className="join-row mt-5">
-                                <div className="join-label">
-                                    닉네임 <span className="req">*</span>
+                <Form onSubmit={onSubmit}>
+                    {/* 회원가입 시작 */}
+                    <div className='signup_all'>
+                        <div className='signup_box_all'>
+                            <div className='signup_box'>
+                                <div className='signup_box_title'>
+                                    <h4 className='mt-1'>회원가입</h4>
                                 </div>
 
-                                <div className="join-field">
-                                    <InputGroup size="sm" className="join-ig">
-                                        <Form.Control name="nickname" value={form.nickname} onChange={onChange}
-                                            className={errors.nickname ? 'is-invalid' : available.nickname === true ? 'is-valid' : ''}
-                                            placeholder="닉네임을 입력해주세요." />
-
-                                        <Button
-                                            type="button" className={`join-btn-outline ${checking.nickname ? 'text-white bg-primary' : ''}`}
-                                            onClick={() => handleCheckDuplicate('nickname')} disabled={checking.nickname}>
-                                            {checking.nickname ? (<span className="spinner-border spinner-border-sm" />) : '중복확인'}
-                                        </Button>
-                                    </InputGroup>
-
-                                    {errors.nickname && <div className="form-text text-danger small mb-2">{errors.nickname}</div>}
-                                    {available.nickname === true && <div className="form-text text-success small mb-2">사용 가능한 닉네임입니다.</div>}
-                                </div>
-                            </div>
-
-                            {/* 아이디 */}
-                            <div className="join-row">
-                                <div className="join-label">
-                                    아이디 (email) <span className="req">*</span>
-                                </div>
-
-                                <div className="join-field">
-                                    <InputGroup size="sm" className="join-ig">
-                                        <Form.Control name="email" type="email" value={form.email} onChange={onChange}
-                                            className={errors.email ? 'is-invalid' : available.email === true ? 'is-valid' : ''}
-                                            placeholder="예: marketkurly@kurly.com" />
-
-                                        <Button
-                                            type="button" className={`join-btn-outline ${checking.email ? 'text-white bg-primary' : ''}`}
-                                            onClick={() => handleCheckDuplicate('email')} disabled={checking.email}>
-                                            {checking.email ? (<span className="spinner-border spinner-border-sm" />) : '중복확인'}
-                                        </Button>
-                                    </InputGroup>
-
-                                    {errors.email && <div className="form-text text-danger small mb-2">{errors.email}</div>}
-                                    {available.email === true && <div className="form-text text-success small mb-2">사용 가능한 이메일입니다.</div>}
-                                </div>
-                            </div>
-
-
-                            {/* 비밀번호 */}
-                            <div className="join-row">
-                                <div className="join-label">
-                                    비밀번호 (8자 이상) <span className="req">*</span>
-                                </div>
-
-                                <div className="join-field">
-                                    <Form.Control
-                                    size="sm"
-                                    type="password"
-                                    name="password"
-                                    value={form.password}
-                                    onChange={onChange}
-                                    placeholder="비밀번호를 입력해주세요."
-                                    className={`join-input ${!isPasswordValid && form.password ? "is-invalid" : ""}`}
-                                    />
-
-                                    {!isPasswordValid && form.password && (
-                                    <div className="invalid-feedback">
-                                        비밀번호는 8자 이상이어야 합니다.
+                                {/* 닉네임 */}
+                                <div className="join-row mt-5">
+                                    <div className="join-label">
+                                        닉네임 <span className="req">*</span>
                                     </div>
-                                    )}
 
+                                    <div className="join-field">
+                                        <InputGroup size="sm" className="join-ig">
+                                            <Form.Control name="nickname" value={form.nickname} onChange={onChange}
+                                                className={errors.nickname ? 'is-invalid' : available.nickname === true ? 'is-valid' : ''}
+                                                placeholder="닉네임을 입력해주세요." />
+
+                                            <Button
+                                                type="button" className={`join-btn-outline ${checking.nickname ? 'text-white bg-primary' : ''}`}
+                                                onClick={() => handleCheckDuplicate('nickname')} disabled={checking.nickname}>
+                                                {checking.nickname ? (<span className="spinner-border spinner-border-sm" />) : '중복확인'}
+                                            </Button>
+                                        </InputGroup>
+
+                                        {errors.nickname && <div className="form-text text-danger small mb-2">{errors.nickname}</div>}
+                                        {available.nickname === true && <div className="form-text text-success small mb-2">사용 가능한 닉네임입니다.</div>}
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* 비밀번호 확인 */}
-                            <div className="join-row">
-                                <div className="join-label">
-                                    비밀번호확인 <span className="req">*</span>
+                                {/* 아이디 */}
+                                <div className="join-row">
+                                    <div className="join-label">
+                                        아이디 (email) <span className="req">*</span>
+                                    </div>
+
+                                    <div className="join-field">
+                                        <InputGroup size="sm" className="join-ig">
+                                            <Form.Control name="email" type="email" value={form.email} onChange={onChange}
+                                                className={errors.email ? 'is-invalid' : available.email === true ? 'is-valid' : ''}
+                                                placeholder="예: marketkurly@kurly.com" />
+
+                                            <Button
+                                                type="button" className={`join-btn-outline ${checking.email ? 'text-white bg-primary' : ''}`}
+                                                onClick={() => handleCheckDuplicate('email')} disabled={checking.email}>
+                                                {checking.email ? (<span className="spinner-border spinner-border-sm" />) : '중복확인'}
+                                            </Button>
+                                        </InputGroup>
+
+                                        {errors.email && <div className="form-text text-danger small mb-2">{errors.email}</div>}
+                                        {available.email === true && <div className="form-text text-success small mb-2">사용 가능한 이메일입니다.</div>}
+                                    </div>
                                 </div>
 
-                                <div className="join-field">
-                                    <Form.Control size='sm' type="password" name="password2" value={form.password2} onChange={onChange} placeholder="비밀번호를 한 번 더 입력해주세요." className="join-input" />
-                                </div>
-                            </div>
 
+                                {/* 비밀번호 */}
+                                <div className="join-row">
+                                    <div className="join-label">
+                                        비밀번호 (8자 이상) <span className="req">*</span>
+                                    </div>
 
+                                    <div className="join-field">
+                                        <Form.Control
+                                        size="sm"
+                                        type="password"
+                                        name="password"
+                                        value={form.password}
+                                        onChange={onChange}
+                                        placeholder="비밀번호를 입력해주세요."
+                                        className={`join-input ${!isPasswordValid && form.password ? "is-invalid" : ""}`}
+                                        />
 
-                            {/* 생년월일 */}
-                            <div className="join-row mb-5">
-                                <div className="join-label">생년월일</div>
-
-                                <div className="join-field">
-                                    <Form.Control size="sm"
-                                        type="text"
-                                        name="birth"
-                                        value={form.birth}
-                                        onChange={onBirthChange}
-                                        onBlur={onBirthBlur}
-                                        placeholder="YYYY/MM/DD"
-                                        maxLength={10}
-                                        inputMode="numeric"
-                                        className="join-input" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className='signup_checkbox'>
-                            <div className='signup_checkbox_title join-label '>이용약관동의 <span className="req">*</span>
-                            </div>
-                            <div className='signup_checkbox_all_content'>
-                                <div colSpan={2}>
-                                    <div className="signup_check_content d-grid gap-1 py-1 d-flex">
-                                        <div>
-                                            <Form.Check label="서비스 이용약관 동의 (필수)" name="terms" checked={agree.terms} onChange={onAgreeChange} />
-                                            <Form.Check label="개인정보 처리방침 동의 (필수)" name="privacy" checked={agree.privacy} onChange={onAgreeChange} />
-                                            <Form.Check label="외부 AI 서비스 동의 (필수)" name="thirdParty" checked={agree.thirdParty} onChange={onAgreeChange} />
+                                        {!isPasswordValid && form.password && (
+                                        <div className="invalid-feedback">
+                                            비밀번호는 8자 이상이어야 합니다.
                                         </div>
-                                        <div className='signup_checkbox_right'>
-                                            <Form.Check label="마케팅 정보 수신 (선택)" name="marketing" checked={agree.marketing} onChange={onAgreeChange} />
-                                            <Form.Check label="데이터 분석/로그 수집 (선택)" name="analytics" checked={agree.analytics} onChange={onAgreeChange} />
-                                            <Form.Check label="맞춤 추천을 위한 정보 활용 (선택)" name="recommend" checked={agree.recommend} onChange={onAgreeChange} />
-                                        </div>
+                                        )}
+
+                                    </div>
+                                </div>
+
+                                {/* 비밀번호 확인 */}
+                                <div className="join-row">
+                                    <div className="join-label">
+                                        비밀번호확인 <span className="req">*</span>
+                                    </div>
+
+                                    <div className="join-field">
+                                        <Form.Control size='sm' type="password" name="password2" value={form.password2} onChange={onChange} placeholder="비밀번호를 한 번 더 입력해주세요." className="join-input" />
+                                    </div>
+                                </div>
+
+
+
+                                {/* 생년월일 */}
+                                <div className="join-row mb-5">
+                                    <div className="join-label">생년월일 <span className="req">*</span>
+                                    </div>
+
+                                    <div className="join-field">
+                                        <Form.Control size="sm"
+                                            type="text"
+                                            name="birth"
+                                            value={form.birth}
+                                            onChange={onBirthChange}
+                                            onBlur={onBirthBlur}
+                                            placeholder="YYYY/MM/DD"
+                                            maxLength={10}
+                                            inputMode="numeric"
+                                            className="join-input" />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="signup_button">
-                            <Button className='signup-left-button' type="button" variant="secondary" onClick={() => Navigate("/login")}>
-                                취소
-                            </Button>
-                            <Button type="submit" className="signup-right-button" disabled={!requiredOk}>
-                                회원가입
-                            </Button>
+                            <div className='signup_checkbox'>
+                                <div className='signup_checkbox_title join-label '>이용약관동의 <span className="req">*</span>
+                                </div>
+                                <div className='signup_checkbox_all_content'>
+                                    <div colSpan={2}>
+                                        <div className="signup_check_content d-grid gap-1 py-1 d-flex">
+                                            <div>
+                                                <Form.Check label="서비스 이용약관 동의 (필수)" name="terms" checked={agree.terms} onChange={onAgreeChange} />
+                                                <Form.Check label="개인정보 처리방침 동의 (필수)" name="privacy" checked={agree.privacy} onChange={onAgreeChange} />
+                                                <Form.Check label="외부 AI 서비스 동의 (필수)" name="thirdParty" checked={agree.thirdParty} onChange={onAgreeChange} />
+                                            </div>
+                                            <div className='signup_checkbox_right'>
+                                                <Form.Check label="마케팅 정보 수신 (선택)" name="marketing" checked={agree.marketing} onChange={onAgreeChange} />
+                                                <Form.Check label="데이터 분석/로그 수집 (선택)" name="analytics" checked={agree.analytics} onChange={onAgreeChange} />
+                                                <Form.Check label="맞춤 추천을 위한 정보 활용 (선택)" name="recommend" checked={agree.recommend} onChange={onAgreeChange} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="signup_button">
+                                <Button className='signup-left-button' type="button" variant="secondary" onClick={() => Navigate("/login")}>
+                                    취소
+                                </Button>
+                                <Button type="submit" className="signup-right-button" disabled={!requiredOk}>
+                                    회원가입
+                                </Button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </Form>
             </Container>
         </div>
     );

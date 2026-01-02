@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "./NoticeDetail.css";
+import "../../css/Notice.css";
 import { fetchNoticeDetail, likeNotice, createComment, deleteNotice, deleteComment } from "../../api/Notice_Api";
 import { AuthUtils } from '../../api/User_Api';
 

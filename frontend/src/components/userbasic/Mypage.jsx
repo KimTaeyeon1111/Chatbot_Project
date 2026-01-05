@@ -3,7 +3,7 @@
 import React,{ useEffect, useState } from 'react'
 import { Container, Row, Col, Image, Form, InputGroup, Button } from 'react-bootstrap';
 import { updateProfile } from '../../api/Mypage_Api';
-import  { AuthUtils,TokenManager }  from '../../api/User_Api';
+import  { TokenManager }  from '../../api/User_Api';
 import '../../css/User.css'
 import { getMyProfile,delete_user } from '../../api/Mypage_Api';
 import { useNavigate } from 'react-router-dom';
@@ -81,7 +81,7 @@ const Mypage = () => {
       const result = await delete_user();
 
       if (result.success) {
-        TokenManager.logout();
+        TokenManager.clear();
         alert('회원탈퇴가 완료되었습니다! 🙏');
         navigate('/');
       }
@@ -94,7 +94,7 @@ const Mypage = () => {
 
   //GPT (유저정보 불러오기)
   useEffect(() => {
-  if (!AuthUtils.isLoggedIn()) {
+  if (!TokenManager.isLoggedIn()) {
     setLoading(false);
     return;
   }
@@ -107,7 +107,7 @@ const Mypage = () => {
     } catch (err) {
       console.error(err);
       alert('유저 정보를 불러오지 못했습니다.');
-      AuthUtils.logout();
+      TokenManager.logout();
     } finally {
       setLoading(false);
     }
@@ -123,7 +123,7 @@ if (loading) {
     </Container>
   );
 }
-    if (!AuthUtils.isLoggedIn()) {
+    if (!TokenManager.isLoggedIn()) {
         return (
           <div className='mypage-content'>
             <Container>

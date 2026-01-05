@@ -1,5 +1,5 @@
 // src/api/Chatlist_Api.js
-import { publicApi, TokenManager } from "./User_Api";
+import { protectedApi, TokenManager } from "./User_Api";
 
 export const GetLastChat = async () => {
   try {
@@ -9,8 +9,9 @@ export const GetLastChat = async () => {
       return { success: false, total_useboxes: 0, last_chats: [] };
     }
 
-    const response = await publicApi.get(`/${userId}/last-chats`);
+    const response = await protectedApi.get(`/${userId}/last-chats`);
     return response.data;
+
   } catch (error) {
     console.error("유저 마지막 채팅 로드 실패:", error);
     return { success: false, total_useboxes: 0, last_chats: [] };

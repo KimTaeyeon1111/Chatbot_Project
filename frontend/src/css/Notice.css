@@ -221,7 +221,7 @@
 /* 게시글 작성 / 수정 페이지 */
 /* ---------------------------------------------- */
 .NoticeWrite_all {width: 100%; max-width: 1200px; }
-.NW_title_box {width: 140px; height: 45px; margin: 70px 0; background-color: #F3EEFF; display: flex; justify-content: center; align-items: center; border-radius: 5px; margin-top: 150px; }
+.NW_title_box {width: 140px; height: 45px; margin-bottom: 70px ; background-color: #F3EEFF; display: flex; justify-content: center; align-items: center; border-radius: 5px; margin-top: 100px; }
 .NW_title {width: 130px; height: 32px; margin-top: 5px; font-weight: 550; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid #444;}
 .image-preview-container {display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap;}
 .preview-image {width: 120px; height: 120px; object-fit: cover; border-radius: 8px;}
@@ -232,6 +232,7 @@ font-size: 10px; background: none; border: 1px solid #CAC6FF;}
 .NW-sub-title {display: flex;}
 .NW-sub-h6 {width: 120px; height: 35px; display: flex; justify-content: center; align-items: center; background-color: #CAC6FF; margin-right: 10px; border-radius: 6px;}
 .NW-title-text {height: 35px;}
+.NW-title-text1 {height: 35px; padding: 0 12px; line-height: 35px;}
 .NW_preview_img {margin-bottom: 50px; border-radius: 50%;}
 
 .NW-content-row {display: block;}

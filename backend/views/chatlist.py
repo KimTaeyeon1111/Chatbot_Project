@@ -1,6 +1,6 @@
 # routes/user_routes.py
 from flask import Blueprint, jsonify, current_app
-from sqlalchemy import func, and_
+from sqlalchemy import func, and_, desc
 from backend.models import db, User, UseBox, BasicAI, ChatLog
 
 chatlist_bp = Blueprint('chatlist', __name__)
@@ -61,4 +61,34 @@ def get_user_last_chats(user_id: int):
         "user_id": user_id,
         "total_useboxes": len(results),
         "last_chats": results
+    })
+
+
+@chatlist_bp.route('/<int:user_id>/chats/<int:usebox_id>/messages')
+def get_usebox_messages(user_id: int, usebox_id: int):
+    messages = db.session.query(ChatLog).filter(
+        ChatLog.usebox_id == usebox_id
+    ).order_by(desc(ChatLog.created_at)).limit(100).all()
+
+    result_messages = []
+    for msg in reversed(messages):
+        if msg.question:
+            result_messages.append({
+                "id": f"q_{msg.id}",
+                "text": msg.question,
+                "sender": "user",
+                "created_at": msg.created_at.isoformat()
+            })
+        if msg.answer:
+            result_messages.append({
+                "id": f"a_{msg.id}",
+                "text": msg.answer,
+                "sender": "ai",
+                "created_at": msg.created_at.isoformat()
+            })
+
+    return jsonify({
+        "success": True,
+        "usebox_id": usebox_id,
+        "messages": result_messages
     })

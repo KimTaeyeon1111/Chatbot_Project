@@ -37,7 +37,31 @@ def create_app():
     app = Flask(__name__)
 
     # CORS 설정
-    CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:5000"]}}, supports_credentials=True)
+    # CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:5000"]}}, supports_credentials=True)
+    # CORS(app,
+    #      origins=["http://localhost:3000"],
+    #      supports_credentials=True,
+    #      methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    #      allow_headers=['Authorization', 'Content-Type'])
+    #
+    # # 500 에러에도 CORS 헤더 추가
+    # @app.before_request
+    # def handle_preflight():
+    #     if request.method == 'OPTIONS':
+    #         return '', 200
+    @app.after_request
+    def after_request(response):
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Headers'] = 'Authorization,Content-Type'
+        response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS,PATCH'
+        return response
+
+
+    @app.before_request
+    def before_request():
+        if request.method == 'OPTIONS':
+            return '', 200
 
     # SQLAlchemy 설정
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///AI.db"
@@ -73,16 +97,7 @@ def create_app():
     db.init_app(app)
     Migrate(app, db)
 
-    # 500 에러에도 CORS 헤더 추가
-    @app.before_request
-    def handle_preflight():
-        if request.method == 'OPTIONS':
-            response = make_response()
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-            response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS'
-            response.headers['Access-Control-Allow-Headers'] = 'Authorization,Content-Type'
-            return response  # 200 OK 자동 반환
-        return None
+
 
     # Blueprint 등록
     app.register_blueprint(user_bp, url_prefix="/api")

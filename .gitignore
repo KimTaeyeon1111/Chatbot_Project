@@ -8,3 +8,4 @@ __pycache__/
 /backend/static/
 chroma_db/
 .env
+.instance/

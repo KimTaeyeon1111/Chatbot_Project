@@ -63,13 +63,13 @@ def get_ai_config(ai_type):
 # 1. AI 초기화
 @bp.route('/ai/aa/<ai_type>', methods=['GET'])
 @token_required
-def ai_init(ai_type):
+def ai_init(ai_type,user):
     if not client: return jsonify({'error': 'OpenAI 오류'}), 500
     config = get_ai_config(ai_type)
     if not config: return jsonify({'error': 'AI 없음'}), 404
 
-    user_name = session.get('user_nickname')or '사용자'
-    user_id = session.get('user_id')or 1
+    user_name = user.user_nickname
+    user_id = user.user_id
     history = get_chat_from_mongo(user_id, ai_type) if user_id else []
 
     intro_html = config['system_intro'].replace('{user_name}', user_name)
@@ -83,7 +83,8 @@ def ai_init(ai_type):
 
 # 2. AI 대화 (핵심)
 @bp.route('/ai/aa/<ai_type>/ask', methods=['POST'])
-def ai_ask(ai_type):
+@token_required
+def ai_ask(ai_type,user):
     if not client: return jsonify({'error': 'OpenAI 오류'}), 500
 
     data = request.get_json()
@@ -93,8 +94,8 @@ def ai_ask(ai_type):
     config = get_ai_config(ai_type)
     if not config: return jsonify({'error': 'AI 없음'}), 404
 
-    user_id = session.get('user_id', 1)
-    user_name = session.get('user_name', '사용자')
+    user_id = user.user_id
+    user_name = user.user_nickname
 
     # GPT 호출
     system_prompt = config['system_prompt'].format(user_name=user_name)
@@ -131,7 +132,8 @@ def ai_ask(ai_type):
 
 # 3. AI 목록
 @bp.route('/ai/aa/list')
-def ai_list():
+@token_required
+def ai_list(user):
     ais = BasicAI.query.filter_by(ai_type=False).all()
     return jsonify({
         'status': 'success',
@@ -142,11 +144,12 @@ def ai_list():
 
 # 4. 리포트
 @bp.route('/ai/aa/<ai_type>/report')
-def ai_report(ai_type):
+@token_required
+def ai_report(ai_type,user):
     config = get_ai_config(ai_type)
     if not config: return jsonify({'error': 'AI 없음'}), 404
 
-    user_id = session.get('user_id', 1)
+    user_id = user.user_id
     history = db.session.query(ChatLog).join(UseBox).filter(
         UseBox.user_id == user_id, UseBox.ai_id == config['ai_id']
     ).order_by(ChatLog.created_at.desc()).limit(10).all()

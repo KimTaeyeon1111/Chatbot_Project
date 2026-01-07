@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { TokenManager,protectedApi } from '../api/User_Api';
+import * as aiApi from '../api/AI_Api.js';
 
 import "../css/ChatComponent.css";
 
@@ -24,7 +25,7 @@ const ChatComponent = () => {
     // 인트로가 너무 길면 전송 버튼이 아래로 밀리는 문제 줄여줌
     const INTRO_MAX_HEIGHT = 220;
 
-    // 2. 봇 설정 (nickname 상태에 따라 제목이 실시간으로 변합니다)
+    // 2. 봇 설정 (봇 별로 색 지정 상태에 따라 제목이 실시간으로 변합니다)
     const botConfigs = {
         wellness: { title: `🌿 ${nickname}님의 웰니스 코치`, color: '#4CAF50', placeholder: '마음 상태를 들려주세요...' },
         career: { title: `🚀 ${nickname}님의 커리어 멘토`, color: '#FF8C00', placeholder: '진로 고민을 함께 나눠보시죠...' },
@@ -60,25 +61,17 @@ const ChatComponent = () => {
                 setNickname(token || '사용자');
 
                 // C. 서버로부터 챗봇 인트로 정보 가져오기
-                const res = await protectedApi.get(`/${type}/`);
-                const data = res.data;
+                const data = await aiApi.getIntroAndHistory(type);
+                setIntro(data.intro_html);
 
-                if (data.status === "success") {
-                    // [정석 로직] 서버가 주는 intro_html을 가공 없이 그대로 노출합니다.
-                    // 이름 불일치 문제는 이제 백엔드 파이썬 코드에서 수정하게 됩니다.
-                    setIntro(data.intro_html);
-
-                    // --- [신규 추가 기능] 기존 대화 내역(history) 로드 ---
-                    // 기존 코드를 삭제하지 않고 history 데이터가 있을 경우에만 추가 기능을 수행합니다.
-                    if (data.history && Array.isArray(data.history)) {
-                        const loadedHistory = [];
-                        data.history.forEach(item => {
-                            loadedHistory.push({ role: 'user', text: item.question });
-                            loadedHistory.push({ role: 'ai', text: item.answer });
-                        });
-                        setChat(loadedHistory);
+                if (data.history && Array.isArray(data.history)) {
+                    const loadedHistory = data.history.flatMap(item => [
+                        { role: 'user', text: item.question },
+                        { role: 'ai', text: item.answer }
+                      ]);
+                      setChat(loadedHistory);
                     }
-                }
+
             } catch (err) {
                 console.error(`${type} 데이터 로드 실패:`, err);
             } finally {
@@ -97,11 +90,8 @@ const ChatComponent = () => {
         setIsTyping(true);
 
         try {
-            const res = await protectedApi.post(`/${type}/ask`, {message: currentMsg});
-            const data = res.data;
-            if (data.status === "success" || data.response) {
-                setChat(prev => [...prev, { role: 'ai', text: data.response }]);
-            }
+            const data = await aiApi.sendMessage(type, currentMsg);
+            setChat(prev => [...prev, { role: 'ai', text: data.response }]);
         } catch (error) {
             console.error("전송 에러:", error);
         } finally {
@@ -113,9 +103,8 @@ const ChatComponent = () => {
         if (chat.length < 2) return alert("대화가 부족합니다.");
         setLoading(true);
         try {
-            const res = await protectedApi.get(`/${type}/report`);
-            const data = res.data;
-            if (data.report) setReport(data.report);
+            const data = await aiApi.generateReport(type);
+            setReport(data.report);
         } finally {
             setLoading(false);
         }

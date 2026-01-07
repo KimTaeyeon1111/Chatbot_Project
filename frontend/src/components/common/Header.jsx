@@ -1,6 +1,6 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, setVisible } from "react";
 import { AuthUtils } from "../../api/User_Api";
 
 const Header = () => {
@@ -33,9 +33,11 @@ const Header = () => {
 
   return (
     <>
-      <div className="membership-mini-box">dd</div>
+      <div style={{width:'100%', height:'115px'}}></div>
         <Navbar expand="lg" fixed="top" className="header-all-div" style={{ padding: "0" }}>
-
+          <div className="membership-mini-box">
+            <span>멤버쉽 가입으로 각종 혜택과 쿠폰을 가져가세요!</span>
+          </div>
           <Container fluid className="header-container">
             
             <Navbar.Brand href="/">

@@ -28,7 +28,7 @@ def token_required(f):
 
     return decorated
 
-
+# 로그인 정보 있을시 받는 정보
 @ai_detail_bp.route('/ai/<int:ai_id>', methods=['GET'])
 @token_required
 def get_ai_detail(ai_id, user):
@@ -80,6 +80,25 @@ def get_ai_detail(ai_id, user):
 
     return jsonify(response)
 
+# 비로그인시여도 공개정보 볼수 있게 해주기
+@ai_detail_bp.route('/ai/public/<int:ai_id>', methods=['GET'])
+def get_ai_public(ai_id):
+    ai = BasicAI.query.get_or_404(ai_id)
+    reviews = db.session.query(Review).filter(
+        Review.ai_id == ai_id, Review.review_delete == False
+    ).order_by(desc(Review.review_new)).limit(10).all()
+
+    return jsonify({
+        'ai': ai.to_dict(),
+        'reviews': [r.to_dict() for r in reviews],
+        'is_logged_in': False,
+        'usage_info': {
+            'user_id': "not user",
+            'used_count': 0,
+            'max_free': 0,
+            'has_free_usage': 0
+        },
+    })
 
 @ai_detail_bp.route('/ai/<int:ai_id>/review', methods=['POST'])
 @token_required
@@ -139,3 +158,39 @@ def delete_review(ai_id, review_id, user):
     db.session.commit()
 
     return jsonify({'success': True})
+
+
+@ai_detail_bp.route('/ai/<int:ai_id>/usebox', methods=['POST'])
+@token_required
+def create_ai_usebox(ai_id, user):
+    user_id = user.user_id
+    ai = BasicAI.query.get_or_404(ai_id)
+
+    # 중복 UseBox 체크
+    existing = UseBox.query.filter_by(
+        user_id=user_id,
+        ai_id=ai_id
+    ).first()
+
+    if existing:
+        return jsonify({
+            'success': True,
+            'message': '이미 사용 중',
+            'use_id': existing.use_id
+        }), 200
+
+    # UseBox 생성
+    usebox = UseBox(
+        user_id=user_id,
+        ai_id=ai_id,
+        use_start=datetime.now()
+    )
+    db.session.add(usebox)
+    db.session.commit()
+
+    return jsonify({
+        'success': True,
+        'message': 'UseBox 생성됨',
+        'use_id': usebox.use_id,
+        'ai_content': ai.ai_content
+    }), 201

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import "../../css/Detail.css";
 import * as Api from '../../api/AI_Detail_Api.js';
 
-export default function Detail() {  // props로 aiId 받기
+export default function Detail() {
     const { aiId } = useParams();
     const [aiData, setAiData] = useState(null);
     const [reviews, setReviews] = useState([]);
@@ -14,12 +14,10 @@ export default function Detail() {  // props로 aiId 받기
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [hasReview, setHasReview] = useState(false);
     const [hasUsedAi, setHasUsedAi] = useState(false);
-    const [aiDetail, setAiDetail] = useState(null);
     const [usageInfo, setUsageInfo] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('🔍 useParams aiId:', aiId);
         fetchDetail();
         fetchReviewsFromJson();
     }, [aiId]);
@@ -27,7 +25,6 @@ export default function Detail() {  // props로 aiId 받기
     const fetchDetail = async () => {
         try {
             const data = await Api.fetchAiDetail(aiId);
-            console.log('📦 API 응답:', data);
             setAiData(data.ai);
             setReviews(data.reviews);
             setCanWrite(data.can_write_review);
@@ -39,8 +36,8 @@ export default function Detail() {  // props로 aiId 받기
 
             setLoading(false);
         } catch (error) {
-            console.error('AI 정보 로드 실패:', error);
             setLoading(false);
+            navigate('/ErrorPage')
         }
     };
 
@@ -67,8 +64,6 @@ export default function Detail() {  // props로 aiId 받기
         setReviews(prev =>
             prev.filter(r => r.review_id !== reviewId)
         );
-
-        // ✅ 삭제 후 즉시 상태 갱신
         await fetchDetail();
     };
 
@@ -80,7 +75,6 @@ export default function Detail() {  // props로 aiId 받기
             // aiId에 해당하는 리뷰만 가져오기
             setReviewData(json[aiId] || []);
         } catch (e) {
-            console.error("리뷰 JSON 로드 실패", e);
             setReviewData([]);
         }
     };
@@ -186,19 +180,30 @@ export default function Detail() {  // props로 aiId 받기
                         ) : usageInfo?.has_free_usage ? (
                             <button
                                 className="write-btn"
-                                onClick={() => {
+                                onClick={async () => {
                                     const token = localStorage.getItem("authToken");
                                     if (!token) {
                                         alert("로그인 후 무료 사용 가능합니다.");
                                         navigate("/login");
                                         return;
                                     }
+                                    await Api.createUseBoxDetail(aiData.ai_id);
                                     navigate(`/aichat/${aiData.ai_content}`);
                                 }}
                             >
                                 무료 사용 시작하기 ({usageInfo.used_count}/3)
                             </button>
-                        ) : (
+                        ) :  !isLoggedIn ? (  // 👈 👉 로그인 X일 때 신규 추가
+                                <button
+                                    className="write-btn"
+                                    onClick={() => {
+                                        alert("로그인 후 무료 사용 가능합니다.");
+                                        navigate("/login");
+                                    }}
+                                >
+                                    로그인 후 무료 사용하기
+                                </button>
+                            ) :(
                             <button
                                 className="write-btn"
                                 onClick={() => navigate('/pay')}  // 결제 페이지

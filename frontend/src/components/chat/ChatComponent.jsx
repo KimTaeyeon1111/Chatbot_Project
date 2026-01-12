@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { TokenManager,protectedApi } from '../../api/User_Api';
 import * as aiApi from '../../api/AI_Api.js';
@@ -8,12 +8,15 @@ import "../../css/ChatComponent.css";
 
 const ChatComponent = () => {
     const { type } = useParams();
+    const navigate = useNavigate();
     const [msg, setMsg] = useState('');
     const [chat, setChat] = useState([]);
     const [intro, setIntro] = useState('');
     const [report, setReport] = useState('');
     const [loading, setLoading] = useState(true);
     const [isTyping, setIsTyping] = useState(false);
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [loadingAuth, setLoadingAuth] = useState(true);
 
     // 1. 사용자 정보 및 닉네임 상태 관리
     const [userInfo, setUserInfo] = useState(null);
@@ -38,6 +41,32 @@ const ChatComponent = () => {
     };
 
     const currentBot = botConfigs[type] || { title: `🤖 ${nickname}님의 AI 어시스턴트`, color: '#333', placeholder: '메시지를 입력하세요...' };
+
+    useEffect(() => {
+        const verifyAccess = async () => {
+            if (!TokenManager.isLoggedIn()) {
+                navigate('/login', { state: { message: '로그인 후 이용 가능합니다.' } });
+                return;
+            }
+
+            try {
+                const userId = TokenManager.getUserId();
+                const response = await protectedApi.get(`/ai/aa/${type}/verify-access?userId=${userId}`);
+
+                if (!response.data.has_usebox) {
+                    navigate('/ErrorPage');
+                    return;
+                }
+                setIsAuthorized(true);
+            } catch (error) {
+                navigate('/ErrorPage');
+            } finally {
+                setLoadingAuth(false);
+            }
+        };
+        verifyAccess();
+    }, [type, navigate]);
+
 
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -93,7 +122,6 @@ const ChatComponent = () => {
             const data = await aiApi.sendMessage(type, currentMsg);
             setChat(prev => [...prev, { role: 'ai', text: data.response }]);
         } catch (error) {
-            console.error("전송 에러:", error);
         } finally {
             setIsTyping(false);
         }
@@ -111,12 +139,13 @@ const ChatComponent = () => {
     };
 
     // 리포트 버튼 노출 조건 (원하는 기준으로 숫자만 변경// 추가)
-    const canShowReport = chat.length >= 6;     // 예: 3번 황복(유저+AI 6개)이상 일때 노출
+    const canShowReport = chat.length >= 6;
 
     // css에서 쓰는 변수(봇 컬러)
     const cssVars = {
         "--bot-color": currentBot.color
     };
+
 
     return (
         <div className='chat-Page' style={cssVars}>

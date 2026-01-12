@@ -5,7 +5,10 @@ import { protectedApi, TokenManager } from './User_Api';
 
 //ai정보 조회 Api
 export const fetchAiDetail = async (aiId) => {
-  const response = await protectedApi.get(`/ai/${aiId}`);
+    const token = localStorage.getItem('authToken');
+    const url = token ? `/ai/${aiId}` : `/ai/public/${aiId}`;
+
+    const response = await protectedApi.get(url);
   return response.data;
 };
 
@@ -29,3 +32,7 @@ export const deleteReview = async (aiId, reviewId) => {
   return response.data;
 };
 
+//usebox 생성 Api
+export const createUseBoxDetail = async (aiId) => {
+    return protectedApi.post(`/ai/${aiId}/usebox`);
+};

@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { debounce } from 'lodash';
 import { Id_Check, New_User } from '../../api/User_Api';
 
-import { Container, Row, Col, Button, Form, Card, Table, InputGroup, Image } from "react-bootstrap";
-import { FaGoogle, FaComment } from "react-icons/fa";   //부트스트랩 불러오기
+import { Container, Button, Form, InputGroup, Image } from "react-bootstrap";
 
 
 //회원가입 함수 생성

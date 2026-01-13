@@ -10,7 +10,6 @@ export default function ChatList() {
   const [rooms, setRooms] = useState([]);
   const [loadingRooms, setLoadingRooms] = useState(true);
   const [activeRoomId, setActiveRoomId] = useState(null);
-  const [mobileView, setMobileView] = useState("list");
   const [messagesByRoom, setMessagesByRoom] = useState({});
   const [loadingMessages, setLoadingMessages] = useState(false);
 
@@ -44,15 +43,12 @@ export default function ChatList() {
   }, [messagesByRoom]);
 
   const handleClickRoom = async (roomId) => {
-    console.log("방 클릭:", roomId);
     setActiveRoomId(roomId);
-    setMobileView("chat");
 
     if (!messagesByRoom[roomId]) {
       setLoadingMessages(true);
       try {
         const data = await GetRoomMessages(roomId);
-        console.log("API 응답:", data);
 
         if (data?.success && Array.isArray(data.messages)) {
           const messages = data.messages
@@ -64,14 +60,12 @@ export default function ChatList() {
               createdAt: new Date(msg.created_at || Date.now()).getTime()
             }));
 
-          console.log("메시지 변환:", messages.length, "개");
           setMessagesByRoom(prev => ({
             ...prev,
             [roomId]: messages
           }));
         }
       } catch (error) {
-        console.error("로딩 에러:", error);
       } finally {
         setLoadingMessages(false);
       }
@@ -106,7 +100,6 @@ export default function ChatList() {
               className="chatHomeBtn"
               onClick={() => {
                 navigate("/");
-                setMobileView("list");
               }}
               title="메인으로"
             >

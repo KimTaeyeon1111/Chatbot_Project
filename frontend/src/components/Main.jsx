@@ -36,7 +36,6 @@ const AIIntroduce = () => {
             try {
                 // MainSummary() 한 번만 호출!
                 const data = await MainSummary();
-                console.log("✅ 메인 데이터 불러오기 성공!", data);
                 // BasicAI 데이터 처리 (같은 response에서)
                 if (data?.success && Array.isArray(data.basic_ai)) {
                     const mappedBasicAIData = data.basic_ai.map((item) => ({
@@ -47,7 +46,6 @@ const AIIntroduce = () => {
                     }));
                     setBasicAI_Data(mappedBasicAIData);
                 } else {
-                    console.warn("⚠️ BasicAI 데이터 없음:", data?.basic_ai);
                     setBasicAI_Data([]);
                 }
 
@@ -61,14 +59,12 @@ const AIIntroduce = () => {
                     }));
                     setNoticeData(mappedNoticeData);
                 } else {
-                    console.warn("⚠️ 게시판 데이터 없음:", data?.notice);
                     setNoticeData([]);
                 }
 
 
 
             } catch (error) {
-                console.error("❌ 메인 데이터 불러오기 실패:", error);
                 setNoticeData([]);
                 setBasicAI_Data([]);
             } finally {
@@ -158,8 +154,8 @@ const AIIntroduce = () => {
     // 이동 함수
     const goPage = (p) => setPage(p);
 
-    // 페이지 slice랑 분리
-    const isEmpty = !Loading && noticeData.length === 0;
+    // 페이지 slice랑 분리 - 사용안해서 주석처리
+//     const isEmpty = !Loading && noticeData.length === 0;
 
 
     return (

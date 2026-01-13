@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { TokenManager,protectedApi } from '../../api/User_Api';
@@ -15,18 +15,11 @@ const ChatComponent = () => {
     const [report, setReport] = useState('');
     const [loading, setLoading] = useState(true);
     const [isTyping, setIsTyping] = useState(false);
-    const [isAuthorized, setIsAuthorized] = useState(false);
-    const [loadingAuth, setLoadingAuth] = useState(true);
 
     // 1. 사용자 정보 및 닉네임 상태 관리
-    const [userInfo, setUserInfo] = useState(null);
     const [nickname, setNickname] = useState('사용자');
 
     const chatEndRef = useRef(null);
-
-    // 채팅박스만 스크롤될 수 있게, 상담 인트로 높이를 어느 정도 제한(숫자만 조절)
-    // 인트로가 너무 길면 전송 버튼이 아래로 밀리는 문제 줄여줌
-    const INTRO_MAX_HEIGHT = 220;
 
     // 2. 봇 설정 (봇 별로 색 지정 상태에 따라 제목이 실시간으로 변합니다)
     const botConfigs = {
@@ -57,11 +50,9 @@ const ChatComponent = () => {
                     navigate('/ErrorPage');
                     return;
                 }
-                setIsAuthorized(true);
             } catch (error) {
                 navigate('/ErrorPage');
             } finally {
-                setLoadingAuth(false);
             }
         };
         verifyAccess();
@@ -102,7 +93,6 @@ const ChatComponent = () => {
                     }
 
             } catch (err) {
-                console.error(`${type} 데이터 로드 실패:`, err);
             } finally {
                 setLoading(false);
             }

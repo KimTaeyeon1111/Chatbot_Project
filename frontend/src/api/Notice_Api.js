@@ -25,12 +25,9 @@ export const create_notice = async (noticeData) => {
     const response = await protectedApi.post('/notices', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
-
-    console.log('✅ 게시글 등록 성공:');
     return response.data;
 
   } catch (error) {
-    console.error("❌ notice 등록 실패:", error.response?.data || error.message);
     return {
       success: false,
       error: error.response?.data?.error || error.message || '등록 실패'
@@ -45,10 +42,8 @@ export const fetchNoticeDetail = async (noticeId) => {
     if (!response.data.success) {
       throw new Error(response.data.message || '공지 정보를 불러올 수 없습니다.');
     }
-    console.log(`✅ 공지 ${noticeId} 조회 성공`);
     return response.data;
   } catch (error) {
-    console.error(`❌ 공지 ${noticeId} 조회 실패:`, error.response?.data || error.message);
     throw error;
   }
 };
@@ -60,10 +55,8 @@ export const likeNotice = async (noticeId) => {
     if (!response.data.success) {
       throw new Error(response.data.message);
     }
-    console.log(`✅ 공지 ${noticeId} 좋아요 성공: ${response.data.notice_like}`);
     return response.data;
   } catch (error) {
-    console.error(`❌ 공지 ${noticeId} 좋아요 실패:`, error.response?.data || error.message);
     throw error;
   }
 };
@@ -75,10 +68,8 @@ export const createComment = async (noticeId, commentData) => {
     if (!response.data.success) {
       throw new Error(response.data.message);
     }
-    console.log(`✅ 댓글 등록 성공: ${noticeId}`);
     return response.data.comment;
   } catch (error) {
-    console.error(`❌ 댓글 등록 실패:`, error.response?.data || error.message);
     throw error;
   }
 };
@@ -90,10 +81,8 @@ export const deleteNotice = async (noticeId) => {
     if (!response.data.success) {
       throw new Error(response.data.message);
     }
-    console.log(`✅ 공지 ${noticeId} 삭제 성공`);
     return response.data;
   } catch (error) {
-    console.error(`❌ 공지 ${noticeId} 삭제 실패:`, error.response?.data || error.message);
     throw error;
   }
 };
@@ -105,10 +94,8 @@ export const deleteComment = async (noticeId, commentId) => {
     if (!response.data.success) {
       throw new Error(response.data.message);
     }
-    console.log(`✅ 댓글 삭제 성공: ${commentId}`);
     return response.data;
   } catch (error) {
-    console.error(`❌ 댓글 삭제 실패:`, error.response?.data || error.message);
     throw error;
   }
 };

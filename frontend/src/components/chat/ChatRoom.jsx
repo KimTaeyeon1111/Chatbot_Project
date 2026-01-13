@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import "../../css/ChatRoom.css";
 
 export default function ChatRoom({ room, messages = [], onSend }) {
-  const [msg, setMsg] = useState("");
   const endRef = useRef(null);
   const navigate = useNavigate();
 

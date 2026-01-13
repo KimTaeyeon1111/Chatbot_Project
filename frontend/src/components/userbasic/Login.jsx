@@ -35,20 +35,15 @@ export default function Login() {
       const data = await loginUser(email, password);
 
        if (data.success) {
-           console.log("✅ 로그인 성공 응답:", data);
-           console.log("🎉 로그인 완료! 메인으로 이동합니다.");
-
            //로그인값 저장 및 토큰 생성해주기 여기서 닉네임으로 설정
            TokenManager.save(data.nickname);
-           console.log("✅ AuthUtils.login 완료 - 닉네임 토큰:", data.nickname);
-
             navigate("/");
       } else {
-          console.error("❌ 로그인 실패:", data.message);
+          console.error(" 로그인 실패:", data.message);
           setError(data.message);
       }
     } catch (err) {
-        console.error("💥 로그인 에러:", err.message);
+        console.error(" 로그인 에러:", err.message);
         setError(err.message);
     } finally {
       setLoading(false);

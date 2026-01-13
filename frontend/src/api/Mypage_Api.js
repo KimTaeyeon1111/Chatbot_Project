@@ -40,7 +40,6 @@ export const delete_user = async () => {
     const res = await protectedApi.delete("/users/delete");
     return res.data;
   } catch (err) {
-    console.error("회원 탈퇴 실패:", err);
     throw err;
   }
 };

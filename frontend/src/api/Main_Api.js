@@ -6,7 +6,6 @@ export const MainSummary = async () => {
     const response = await publicApi.get("/main/summary");
     return response.data;
   } catch (error) {
-    console.error("메인 데이터 로드 실패:", error);
     return { success: false, notice: [], basic_ai: [] };
   }
 };

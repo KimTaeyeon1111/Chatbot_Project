@@ -17,7 +17,7 @@ import NoticeWrite from './components/notice/NoticeWrite.jsx';
 import ChatList from './components/chat/ChatList.jsx';
 import NoticeDetail from './components/notice/NoticeDetail.jsx';
 import ChatComponent from './components/chat/ChatComponent.jsx';
-import ChatComponent_KTY from './components/chat/sample.jsx';
+import ChatComponentKTY from './components/chat/sample.jsx';
 
 /* 자동 스크롤 import */
 import BackToTop from "./components/common/BackToTop.jsx";
@@ -71,7 +71,7 @@ function App() {
             {/* 해더만 있음 */}
             <Route element={<NoFooterLayout />}>
                 <Route path="/aichat/:type" element={<ChatComponent />} />
-                <Route path="/KTY/:type" element={<ChatComponent_KTY />} />
+                <Route path="/KTY/:type" element={<ChatComponentKTY />} />
             </Route>
 
             {/* 해더푸터 없음 */}

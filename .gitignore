@@ -1,11 +1,7 @@
-
-
 .idea/
 .venv/
 __pycache__/
-/backend/instance/
 /backend/migrations/
 /backend/static/
-chroma_db/
 .env
-.instance/
+AI.db

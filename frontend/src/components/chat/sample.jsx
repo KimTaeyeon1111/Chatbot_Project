@@ -11,7 +11,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
-export default function ChatComponent_KTY() {
+export default function ChatComponentKTY() {
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);

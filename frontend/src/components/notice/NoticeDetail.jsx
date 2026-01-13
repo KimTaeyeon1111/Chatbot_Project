@@ -22,8 +22,6 @@ export default function NoticeDetail() {
 
   const isOwner = TokenManager.getNickname() === state.noticeData?.author_name;
   useEffect(() => {
-      console.log('🔍 현재 닉네임:', TokenManager.getNickname());
-      console.log('📋 게시글 데이터:', state.noticeData);
     }, [state.noticeData]);
 
   // 데이터 로드

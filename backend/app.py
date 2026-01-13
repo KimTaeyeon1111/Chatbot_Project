@@ -1,10 +1,10 @@
 # backend/app.py
-
+import sys
 from flask import Flask, request
 from flask_migrate import Migrate
 import os
 from dotenv import load_dotenv
-from flask_cors import CORS
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # --- [DB 관련 라이브러리 추가] ---
 from pymongo import MongoClient
@@ -12,16 +12,16 @@ import chromadb
 from chromadb.utils import embedding_functions
 
 # --- [기본 Blueprint import] ---
-from backend.models import db
-from backend.views.user import user_bp
-from backend.views.notice import notice_bp
-from backend.views.ai_detail import ai_detail_bp
-from backend.views.main import main_bp
-from backend.views.mypage import mypage_bp
-from backend.views.chatlist import chatlist_bp
-from backend.views.naver_auth import naver_bp
-from backend.views.ai_chat import ai_chat_bp
-from backend.views.history_views import history_bp
+from models import db
+from views.user import user_bp
+from views.notice import notice_bp
+from views.ai_detail import ai_detail_bp
+from views.main import main_bp
+from views.mypage import mypage_bp
+from views.chatlist import chatlist_bp
+from views.naver_auth import naver_bp
+from views.ai_chat import ai_chat_bp
+from views.history_views import history_bp
 
 
 def create_app():

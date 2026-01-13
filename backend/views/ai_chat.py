@@ -106,13 +106,10 @@ def ai_ask(ai_type,user):
 
     # 저장 (UseBox + ChatLog + MongoDB)
     ai_id = config['ai_id']
+    usebox = UseBox.query.filter_by(user_id=user_id, ai_id=ai_id).first()
+    if not usebox:
+        return jsonify({'error': '먼저 AI를 사용 시작해주세요 (Detail 페이지)'}), 403
     try:
-        usebox = UseBox.query.filter_by(user_id=user_id, ai_id=ai_id).first()
-        if not usebox:
-            usebox = UseBox(user_id=user_id, ai_id=ai_id)
-            db.session.add(usebox)
-            db.session.flush()
-
         log = ChatLog(usebox_id=usebox.use_id, question=message, answer=gpt_response,
                       created_at=datetime.now(timezone.utc))
         db.session.add(log)
@@ -164,3 +161,26 @@ def ai_report(ai_type,user):
     )
 
     return jsonify({'status': 'success', 'report': response.choices[0].message.content})
+
+
+# 5. AI 접근 권한 usebox 존재 여부
+@ai_chat_bp.route('/ai/aa/<ai_type>/verify-access')
+@token_required
+def ai_verify_access(ai_type, user):
+    config = get_ai_config(ai_type)
+    if not config:
+        return jsonify({'has_usebox': False}), 404
+
+    ai_id = config['ai_id']
+    user_id = user.user_id
+
+    #UseBox 존재 여부 확인
+    usebox = UseBox.query.filter_by(
+        user_id=user_id,
+        ai_id=ai_id
+    ).first()
+
+    return jsonify({
+        'has_usebox': bool(usebox),
+        'message': 'usebox 존재' if usebox else 'usebox 없음'
+    })

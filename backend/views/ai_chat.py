@@ -4,9 +4,9 @@ import os
 from flask import Blueprint,request, jsonify, session, current_app
 from openai import OpenAI
 from dotenv import load_dotenv
-from backend.models import db, ChatLog, UseBox,User,BasicAI
+from models import db, ChatLog, UseBox,User,BasicAI
 from datetime import datetime, timezone
-from backend.views.database import save_chat_to_mongo, get_chat_from_mongo
+from views.database import save_chat_to_mongo, get_chat_from_mongo
 from functools import wraps
 import urllib
 

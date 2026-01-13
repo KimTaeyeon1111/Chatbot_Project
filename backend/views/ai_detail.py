@@ -3,7 +3,7 @@
 from flask import Blueprint, jsonify, request
 from functools import wraps
 from urllib.parse import unquote
-from backend.models import db, BasicAI, Review, UseBox, User
+from models import db, BasicAI, Review, UseBox, User
 from sqlalchemy import desc
 from datetime import datetime
 

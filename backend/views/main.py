@@ -1,6 +1,6 @@
 # api/main.py
 from flask import Blueprint, jsonify, request
-from backend.models import Notice, BasicAI, User, CustomAI, UseBox, db
+from models import Notice, BasicAI, User, CustomAI, UseBox, db
 
 main_bp = Blueprint("main", __name__)
 

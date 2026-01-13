@@ -2,7 +2,7 @@ import urllib
 from flask import Blueprint, request, redirect, jsonify, session
 import requests
 from functools import wraps
-from backend.models import db, User
+from models import db, User
 import os
 from dotenv import load_dotenv
 

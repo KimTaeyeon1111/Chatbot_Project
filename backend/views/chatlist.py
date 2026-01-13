@@ -6,7 +6,7 @@ from functools import wraps
 from urllib.parse import unquote
 from sqlalchemy import func, and_, desc
 from datetime import datetime
-from backend.models import db, User, UseBox, BasicAI, ChatLog
+from models import db, User, UseBox, BasicAI, ChatLog
 from datetime import datetime, timezone
 
 bp = Blueprint("ai_chat", __name__)
@@ -110,23 +110,15 @@ def ask_by_ai(ai_id: int, user):
 @bp.route("/ai/<int:ai_id>", methods=["GET"])
 @token_required
 def get_ai(ai_id: int, user):
-    ai = BasicAI.query.get(usebox.ai_id)
+    ai = BasicAI.query.get(ai_id)
     system_prompt = (ai.ai_prompt or "").strip() if ai else ""
-
-    if not system_prompt:
-        system_prompt = (ai.ai_content or "").strip() if ai else ""
-
-        messages = [
-            {"role":"system","content": system_prompt},
-            {"role":"user","content": message }
-        ]
-
     if not ai:
         return jsonify({"success": False, "error": "AI not found"}), 404
 
     return jsonify({
         "success": True,
-        "ai": ai.to_dict()
+        "ai": ai.to_dict(),
+        "system_prompt": system_prompt
     })
 
 

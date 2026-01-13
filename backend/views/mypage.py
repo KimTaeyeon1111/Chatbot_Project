@@ -5,7 +5,7 @@ from functools import wraps
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 import os, uuid
-from backend.models import db, User
+from models import db, User
 from urllib.parse import unquote
 
 mypage_bp = Blueprint("mypage", __name__)

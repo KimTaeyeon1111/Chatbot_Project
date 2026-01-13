@@ -1,11 +1,11 @@
 # backend/views/notice.py
-from flask import Blueprint, request, jsonify, current_app, session, g
+from flask import Blueprint, request, jsonify, current_app, session
 from werkzeug.utils import secure_filename
 import os
 import time
 import datetime
 from urllib.parse import unquote
-from backend.models import User, Notice, Comment, db
+from models import User, Notice, Comment, db
 
 notice_bp = Blueprint('notice', __name__, url_prefix="/api")
 

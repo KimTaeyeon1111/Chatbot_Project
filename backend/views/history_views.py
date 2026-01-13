@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, jsonify
-from backend.models import db, ChatLog
-from backend.views.database import get_mongo_db
+from models import db, ChatLog
+from views.database import get_mongo_db
 
 history_bp = Blueprint('history', __name__)
 

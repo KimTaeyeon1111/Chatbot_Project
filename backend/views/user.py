@@ -1,5 +1,5 @@
-from flask import Blueprint, request, jsonify, session
-from backend.models import db, User
+from flask import Blueprint, request, jsonify
+from models import db, User
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
@@ -106,7 +106,7 @@ def add_user():
 2. 아이디 이메일 존재 여부 확인후 없으면 error
 3. 아이디 이메일 중복체크 한번더 확인후 중복시 error
 4. 문제 없으면 비밀번호 암호화시키기
-5. user 생성 및 add commmit 
+5. user 생성 및 add commit 
 6. 마무리 되면 리턴 success 
 7. 3가지 에러 상황에 대해서 각 오류에 대한 에러메세지 error
 '''

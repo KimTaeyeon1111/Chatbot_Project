@@ -296,6 +296,7 @@ AI 채팅을 중심으로 한 기본 서비스 흐름을 먼저 구현하고,<br
 <details>
 <summary>💳 결제 & 멤버십</summary>
 <br>
+
 ![결제페이지](./docs/video/pay.gif)
 <br>
 - 코인 충전 및 결제 수단 선택 <br>
@@ -307,6 +308,7 @@ AI 채팅을 중심으로 한 기본 서비스 흐름을 먼저 구현하고,<br
 <details>
 <summary>🎥 게시판 & 리뷰</summary>
 <br>
+
 ![게시판페이지](./docs/video/NoticeWrite.gif)
 </details>
 

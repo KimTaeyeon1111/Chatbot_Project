@@ -322,3 +322,56 @@ API 제공 시 불필요한 데이터를 제한하여 응답 속도와 전반적
 - [ChatGPT](https://chatgpt.com/?utm_source=google&utm_medium=paidsearch_brand&utm_campaign=GOOG_C_SEM_GBR_Core_CHT_BAU_ACQ_PER_MIX_ALL_APAC_KR_KO_120624&utm_term=%EC%B1%97%20gpt%20%EC%B1%97%EB%B4%87&utm_content=183521101147&utm_ad=756128607757&utm_match=p&gad_source=1&gad_campaignid=21990694068&gbraid=0AAAAA-IW-UV6gwZey_2ZG2tIndrVp-ve_&gclid=Cj0KCQjwuKnGBhD5ARIsAD19RsYg1bc8H7KJPSNXjdtRlqtaMcDz_eHbzmnWWot_9tRWTJl5dlWU_9YaAgXMEALw_wcB)
 
 
+## 🧱 프로젝트 소개 PPT
+
+<details><summary><b> PPT1보기 </b></summary>
+  
+|  ![CHatBot_1](docs/CHatBot_project_pdf/1.png)  |  ![football_2](docs/CHatBot_project_pdf/2.png)   |
+|:----------------------------------------------:|:------------------------------------------------:|
+|  ![CHatBot_3](docs/CHatBot_project_pdf/3.png)  |   ![CHatBot_4](docs/CHatBot_project_pdf/4.png)   |
+|  ![CHatBot_5](docs/CHatBot_project_pdf/5.png)  |   ![CHatBot_6](docs/CHatBot_project_pdf/6.png)   |
+|  ![CHatBot_7](docs/CHatBot_project_pdf/7.png)  |   ![CHatBot_8](docs/CHatBot_project_pdf/8.png)   |
+|  ![CHatBot_9](docs/CHatBot_project_pdf/9.png)  |  ![CHatBot_10](docs/CHatBot_project_pdf/10.png)  |
+
+</details>
+<details><summary><b> PPT2보기 </b></summary>
+
+| ![CHatBot_11](docs/CHatBot_project_pdf/11.png) | ![football_12](docs/CHatBot_project_pdf/12.png)  |
+|:----------------------------------------------:|:------------------------------------------------:|
+| ![CHatBot_13](docs/CHatBot_project_pdf/13.png) |  ![CHatBot_14](docs/CHatBot_project_pdf/14.png)  |
+| ![CHatBot_15](docs/CHatBot_project_pdf/15.png) |  ![CHatBot_16](docs/CHatBot_project_pdf/16.png)  |
+| ![CHatBot_17](docs/CHatBot_project_pdf/17.png) |  ![CHatBot_18](docs/CHatBot_project_pdf/18.png)  |
+| ![CHatBot_19](docs/CHatBot_project_pdf/19.png) |  ![CHatBot_20](docs/CHatBot_project_pdf/20.png)  |
+
+</details>
+<details><summary><b> PPT3보기 </b></summary>
+
+| ![CHatBot_21](docs/CHatBot_project_pdf/21.png) | ![football_22](docs/CHatBot_project_pdf/22.png)  |
+|:----------------------------------------------:|:------------------------------------------------:|
+| ![CHatBot_23](docs/CHatBot_project_pdf/23.png) |  ![CHatBot_24](docs/CHatBot_project_pdf/24.png)  |
+| ![CHatBot_25](docs/CHatBot_project_pdf/25.png) |  ![CHatBot_26](docs/CHatBot_project_pdf/26.png)  |
+| ![CHatBot_27](docs/CHatBot_project_pdf/27.png) |  ![CHatBot_28](docs/CHatBot_project_pdf/28.png)  |
+| ![CHatBot_29](docs/CHatBot_project_pdf/29.png) |  ![CHatBot_30](docs/CHatBot_project_pdf/30.png)  |
+
+</details>
+<details><summary><b> PPT4보기 </b></summary>
+
+| ![CHatBot_31](docs/CHatBot_project_pdf/31.png) | ![football_32](docs/CHatBot_project_pdf/32.png)  |
+|:----------------------------------------------:|:------------------------------------------------:|
+| ![CHatBot_33](docs/CHatBot_project_pdf/33.png) |  ![CHatBot_34](docs/CHatBot_project_pdf/34.png)  |
+| ![CHatBot_35](docs/CHatBot_project_pdf/35.png) |  ![CHatBot_36](docs/CHatBot_project_pdf/36.png)  |
+| ![CHatBot_37](docs/CHatBot_project_pdf/37.png) |  ![CHatBot_38](docs/CHatBot_project_pdf/38.png)  |
+| ![CHatBot_39](docs/CHatBot_project_pdf/39.png) |  ![CHatBot_40](docs/CHatBot_project_pdf/40.png)  |
+
+</details>
+<details><summary><b> PPT5보기 </b></summary>
+
+| ![CHatBot_41](docs/CHatBot_project_pdf/41.png) | ![football_42](docs/CHatBot_project_pdf/42.png)  |
+|:----------------------------------------------:|:------------------------------------------------:|
+| ![CHatBot_43](docs/CHatBot_project_pdf/43.png) |  ![CHatBot_44](docs/CHatBot_project_pdf/44.png)  |
+| ![CHatBot_45](docs/CHatBot_project_pdf/45.png) |  ![CHatBot_46](docs/CHatBot_project_pdf/46.png)  |
+| ![CHatBot_47](docs/CHatBot_project_pdf/47.png) |  ![CHatBot_48](docs/CHatBot_project_pdf/48.png)  |
+| ![CHatBot_49](docs/CHatBot_project_pdf/49.png) |  ![CHatBot_50](docs/CHatBot_project_pdf/50.png)  |
+
+
+</details>
